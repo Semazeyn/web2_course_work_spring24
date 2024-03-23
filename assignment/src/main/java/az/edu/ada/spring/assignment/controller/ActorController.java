@@ -26,7 +26,7 @@ public class ActorController {
         return "actor/index";
     }
 
-    @GetMapping("/actors/{id}")
+    @GetMapping("/actors/detail/{id}")
     public String getActorById(@PathVariable("id") Long id, Model model) {
         Actor actor = actorService.getActorById(id);
         model.addAttribute("actor", actor);
