@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actor Detail</title>
+    <!-- Include your CSS styles here -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .actor-info {
+            width: 50%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .actor-info span {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .act-btn {
+            border: 1px solid black;
+            border-radius: 3px;
+            padding: 10px;
+            width: 50px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.5s;
+            text-decoration: none;
+            color: black;
+        }
+
+        .act-btn:hover {
+            background-color: black;
+            color: white;
+        }
+
+        .each-title{
+            display:flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .all{
+            padding-left: 100px;
+            padding-right: 100px;
+            padding-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+<h1>Actor Detail</h1>
+<div class="actor-info">
+    <div class="all">
+        <div class="each-title">
+            <span class="title">Name: </span>
+            <span th:text="${actor.name}"></span>
+        </div>
+        <div class="each-title">
+            <span class="title">Gender: </span>
+            <span th:text="${actor.gender}"></span>
+        </div>
+        <div class="each-title">
+            <span class="title">Nationality: </span>
+            <span th:text="${actor.nationality}"></span>
+        </div>
+        <div class="action-buttons">
+            <a th:href="@{/actors/index}" class="back-button act-btn">Back</a>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

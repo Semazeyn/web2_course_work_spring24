@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            /* background-color: #f2f2f2; */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            padding: 100px;
+            background-color: #fff;
+            border-radius: 8px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .links {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .links a {
+            display: inline-block;
+            margin: 10px;
+            padding: 20px 30px;
+            text-decoration: none;
+            color: #fff;
+            background-color: black;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-size: 25px;
+            cursor: pointer;
+            border: 1px solid black;
+        }
+        .links a:hover {
+            background-color: darkgrey;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Welcome to the Web and Mobile II Assignment 1</h1>
+    <div class="links">
+        <a th:href="@{/actors/index}">Actors Page</a>
+        <a th:href="@{/movies/index}">Movies Page</a>
+    </div>
+</div>
+</body>
+</html>
