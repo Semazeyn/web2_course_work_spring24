@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Actor</title>
+    <title>Create Movie</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -41,6 +41,15 @@
             border: 1px solid #ccc;
             border-radius: 3px;
             box-sizing: border-box;
+        }
+
+        input[type="checkbox"] {
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+            margin-right: 15px;
         }
 
         input[type="submit"] {
@@ -80,26 +89,52 @@
             justify-content: center;
             align-items: center;
         }
+
+        .choices{
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            /* margin-bottom: 5px; */
+        }
+
+        .all-choices{
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 
 <body>
-<h1>Update Actor</h1>
-<form th:action="@{/actors/update/{id}(id=${actor.id})}" th:object="${actor}" method="post">
-    <input type="hidden" th:field="*{id}">
+<h1>Create Movie</h1>
+<form action="/movies/create" method="post">
     <label for="name">Name:</label>
-    <input type="text" id="name" name="name" th:field="*{name}" required>
+    <input type="text" id="name" name="name" required>
 
-    <label for="gender">Gender:</label>
-    <input type="text" id="gender" name="gender" th:field="*{gender}" required>
+    <label for="genre">Genre:</label>
+    <input type="text" id="genre" name="genre" required>
 
-    <label for="nationality">Nationality:</label>
-    <input type="text" id="nationality" name="nationality" th:field="*{nationality}" required>
+    <label for="image">Image:</label>
+    <input type="text" id="image" name="image" required>
 
-    <input type="submit" value="Update">
+    <label>Actors:</label>
+    <div class="all-choices">
+        <div class="choices" th:each="actor : ${actors}">
+            <input type="checkbox" th:id="'actor_' + ${actor.id}" th:name="actors" th:value="${actor.id}">
+            <label th:for="'actor_' + ${actor.id}" th:text="${actor.name}">Musa</label>
+        </div>
+        <div class="choices" th:each="actor : ${actors}">
+            <input type="checkbox" th:id="'actor_' + ${actor.id}" th:name="actors" th:value="${actor.id}">
+            <label th:for="'actor_' + ${actor.id}" th:text="${actor.name}">Musa</label>
+        </div>
+        <div class="choices" th:each="actor : ${actors}">
+            <input type="checkbox" th:id="'actor_' + ${actor.id}" th:name="actors" th:value="${actor.id}">
+            <label th:for="'actor_' + ${actor.id}" th:text="${actor.name}">Musa</label>
+        </div>
+    </div>
+
+    <input type="submit" value="Create">
 </form>
 <div class="buttons">
-    <a th:href="@{/actors/index}" class="back-link">Back to Actors List</a>
+    <a th:href="@{/movies/index}" class="back-link">Back to Actors List</a>
 </div>
 </body>
 
