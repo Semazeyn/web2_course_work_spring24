@@ -29,9 +29,4 @@ public class MovieServiceImpl implements MovieService {
         Optional<Movie> optionalMovie = movieRepository.findById(id);
         return optionalMovie.orElse(null);
     }
-
-    @Override
-    public void createMovie(Movie movie) {
-        movieRepository.save(movie);
-    }
 }

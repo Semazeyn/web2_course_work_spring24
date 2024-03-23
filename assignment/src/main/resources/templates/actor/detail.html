@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actor Detail</title>
+    <!-- Include your CSS styles here -->
+    <style>
+        /* Your CSS styles */
+    </style>
 </head>
-<body>
 
+<body>
+<h1>Actor Detail</h1>
+<div>
+    <!-- Display detailed information about the actor -->
+    <p><strong>Name:</strong> <span th:text="${actor.name}"></span></p>
+    <p><strong>Gender:</strong> <span th:text="${actor.gender}"></span></p>
+    <p><strong>Nationality:</strong> <span th:text="${actor.nationality}"></span></p>
+    <!-- You can add more details here -->
+</div>
+<a th:href="@{'/actors'}">Back to Actors List</a>
 </body>
+
 </html>
