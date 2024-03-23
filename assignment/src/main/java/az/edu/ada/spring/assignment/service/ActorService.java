@@ -8,5 +8,6 @@ public interface ActorService {
     List<Actor> getAllActors();
     Actor getActorById(Long id);
     void createActor(Actor actor);
+    void updateActor(Actor actor);
     void deleteActorById(Long id);
 }

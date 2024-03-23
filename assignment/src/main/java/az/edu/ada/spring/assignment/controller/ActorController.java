@@ -48,6 +48,21 @@ public class ActorController {
         return "redirect:/actors/index";
     }
 
+    @GetMapping("/actors/update/{id}")
+    public String showUpdateForm(@PathVariable Long id, Model model) {
+        Actor actor = actorService.getActorById(id);
+        model.addAttribute("actor", actor);
+        return "actor/update";
+    }
+
+    // update POST method's view
+    @PostMapping("/actors/update/{id}")
+    public String updateActor(@PathVariable Long id, @ModelAttribute Actor actor) {
+        actor.setId(id);
+        actorService.updateActor(actor);
+        return "redirect:/actors/index";
+    }
+
     @GetMapping("/actors/delete/{id}")
     public String deleteActor(@PathVariable Long id) {
         actorService.deleteActorById(id);
