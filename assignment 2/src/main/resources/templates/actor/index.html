@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actor List</title>
+    <!-- Add your advanced CSS styles here -->
+</head>
+<body>
+<h1>Actor List</h1>
+<ul>
+    <!-- Iterate over actors and display them -->
+    <li th:each="actor : ${actors}">
+        <a th:href="@{/actors/{id}(id=${actor.id})}" th:text="${actor.name}"></a>
+    </li>
+</ul>
+</body>
+</html>
