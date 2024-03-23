@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Actors</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        @media only screen and (max-width: 768px) {
+            table {
+                width: 100%;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .act-btn {
+            margin-right: 10px;
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        .act-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        .pagination {
+            margin-top: 35px;
+            text-align: center;
+        }
+
+        .pagination ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 auto;
+            display: inline-block;
+        }
+
+        .pagination ul li {
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .pagination ul li a {
+            color: black;
+            text-decoration: none;
+            padding: 8px 12px;
+            border: 1px solid black;
+            border-radius: 3px;
+            transition: background-color 0.5s, color 0.3s;
+        }
+
+        .pagination ul li.disabled a {
+            color: #ccc;
+            border-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .pagination ul li.active a {
+            background-color: black !important;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.5s;
+        }
+
+        .pagination ul li a:hover {
+            background-color: black !important;
+            color: white !important;
+            border-color: black;
+            cursor: pointer;
+        }
+
+        .sort-and-filter{
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+<div class="actions sort-and-filter">
+    <div class="sorting">
+        <label for="sortBy">Sort by:</label>
+        <select id="sortBy" name="sortBy">
+            <option value="id,asc" th:selected="${sortBy == 'id,asc'}">Select</option>
+            <option value="name,asc" th:selected="${sortBy == 'name,asc'}">Name-Ascending</option>
+            <option value="name,desc" th:selected="${sortBy == 'name,desc'}">Name-Descending</option>
+        </select>
+        <button type="button" onclick="sortAuthors()">Sort</button>
+    </div>
+    <a th:href="@{/}" class="delete-button act-btn">Back</a>
+    <a th:href="@{/actors/create}" class="act-btn">Create New Actor</a>
+    <div class="filtration">
+        <label for="nationality">Filter:</label>
+        <select id="nationality" name="nationality">
+            <option value="">Select Nationality</option>
+            <option th:each="nationality : ${nationalities}" th:value="${nationality}" th:text="${nationality}"></option>
+        </select>
+        <button type="button" onclick="applyFilter()">Apply</button>
+    </div>
+</div>
+<h1>List of Actors</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Nationality</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="actor : ${actors}">
+        <td th:text="${actor.id}"></td>
+        <td th:text="${actor.name}"></td>
+        <td th:text="${actor.gender}"></td>
+        <td th:text="${actor.nationality}"></td>
+        <td>
+            <a th:href="@{/actors/detail/{id}(id=${actor.id})}" class="act-btn">Detail</a>
+            <a th:href="@{/actors/update/{id}(id=${actor.id})}" class="act-btn">Update</a>
+            <a th:href="@{/actors/delete/{id}(id=${actor.id})}" class="act-btn">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div th:if="${totalPages > 1}" class="pagination">
+    <ul>
+        <li th:class="${currentPage == 0 ? 'disabled' : ''}">
+            <a th:href="@{/actors/index(page=${currentPage - 1}, size=${size}, sortBy=${sortBy}, nationality=${nationality})}"><</a>
+        </li>
+        <li th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}" th:class="${pageNum == currentPage ? 'active' : ''}">
+            <a th:href="@{/actors/index(page=${pageNum}, size=${size}, sortBy=${sortBy}, nationality=${nationality})}" th:text="${pageNum + 1}"></a>
+        </li>
+        <li th:class="${currentPage == totalPages - 1 ? 'disabled' : ''}">
+            <a th:href="@{/actors/index(page=${currentPage + 1}, size=${size}, sortBy=${sortBy}, nationality=${nationality})}">></a>
+        </li>
+    </ul>
+</div>
+<script>
+        function sortAuthors() {
+            var sortBy = document.getElementById("sortBy").value;
+            var url = window.location.href.split('?')[0] + "?sortBy=" + sortBy;
+            window.location.href = url;
+        }
+
+        function applyFilter() {
+            var nationality = document.getElementById("nationality").value;
+            var sortBy = document.getElementById("sortBy").value;
+            var url = window.location.href.split('?')[0] + "?nationality=" + nationality + "&sortBy=" + sortBy;
+            window.location.href = url;
+        }
+</script>
+</body>
+</html>
