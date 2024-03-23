@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -31,5 +33,24 @@ public class ActorController {
         Actor actor = actorService.getActorById(id);
         model.addAttribute("actor", actor);
         return "actor/detail";
+    }
+
+    @GetMapping("/actors/create")
+    public String showActorForm(Model model) {
+        model.addAttribute("actor", new Actor());
+        return "actor/create";
+    }
+
+    // create POST method's view
+    @PostMapping("/actors/create")
+    public String createActor(@ModelAttribute Actor actor) {
+        actorService.createActor(actor);
+        return "redirect:/actors/index";
+    }
+
+    @GetMapping("/actors/delete/{id}")
+    public String deleteActor(@PathVariable Long id) {
+        actorService.deleteActorById(id);
+        return "redirect:/actors/index";
     }
 }

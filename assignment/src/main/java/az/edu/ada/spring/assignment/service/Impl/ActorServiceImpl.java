@@ -25,4 +25,14 @@ public class ActorServiceImpl implements ActorService {
         Optional<Actor> optionalActor = actorRepository.findById(id);
         return optionalActor.orElse(null);
     }
+
+    @Override
+    public void createActor(Actor actor) {
+        actorRepository.save(actor);
+    }
+
+    @Override
+    public void deleteActorById(Long id) {
+        actorRepository.deleteById(id);
+    }
 }
